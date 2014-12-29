@@ -53,6 +53,10 @@ class Cronen(object):
 
     def _start_web_server(self):
 
+        @bottle.hook('after_request')
+        def enable_cors():
+            bottle.response.headers['Access-Control-Allow-Origin'] = '*'
+
         @bottle.route('/run/<name>')
         def run(name):
             logging.info('Running job {} manually'.format(name))
